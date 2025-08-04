@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 90.5vh;
+    background-image: url('assets/WIP-Page.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: sans-serif;
+    background-color: #c67073;
+    text-align: center;
+    padding-top: 90.5px;
+}
