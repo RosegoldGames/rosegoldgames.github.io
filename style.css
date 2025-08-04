@@ -17,8 +17,5 @@ body {
 }
 
 @media (max-width: 768px) {
-  body {
-    background-size: cover;
-    padding-top: 60px;
-  }
+  
 }
