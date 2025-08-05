@@ -5,10 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="style.css"/>
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml"/>
-    <title>Welcome to RosegoldGames: Powered by Coffee, Managed by Ollie, Developed with Love!</title>
+    <title>Welcome to Rosegold Games: Powered by Coffee, Managed by Ollie, Developed with Love!</title>
 </head>
 <body>
-    <h1></h1>
-    <p></p>
+  <header>
+    <div class="container">
+      <img src="assets/logo-horizontal-transparent.png" alt="Rosegold Games Logo" class="logo" />
+      <nav>
+        <ul id="nav-list">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="menu-toggle" id="menu-toggle">&#9776;</button>
+      </nav>
+    </div>
+  </header>
+
+  <section id="hero">
+    <h2>Powered by Coffee, Managed by Ollie, Developed with Love!</h2>
+    <p>Welcome to my website! I'm still brewing awesome things!</p>
+  </section>
+
+  <section id="about">
+    <img src="assets/pixel_me.png" alt="Pixel Me!" class="pixel-me" />
+    <h2>About Me</h2>
+    <p>I'm a solo indie game developer dedicated to designing upbeat, fun, and story-rich games!</p>
+  </section>
+
+  <section id="services">
+    <h2>My Projects</h2>
+    <div class="card-grid">
+      <div class="card">Under Development</div>
+    </div>
+  </section>
+
+  <section id="contact">
+  <h2>Contact Me</h2>
+  <form action="https://formsubmit.co/caitlyn.rosegoldgames@gmail.com" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://rosegoldgames.com/contact_submission.html">
+    <button type="submit">Send</button>
+  </form>
+</section>
+
+  <footer>
+    <p>&copy; 2025 Rosegold Games. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
