@@ -1,3 +1,4 @@
+console.log("Function triggered.");
 export async function handler(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -31,10 +32,11 @@ export async function handler(event) {
       };
     }
 
-    return {
-      statusCode: 403,
-      body: `CAPTCHA failed: ${JSON.stringify(data)}`
-    };
+  return {
+    statusCode: 403,
+    body: `CAPTCHA failed: ${JSON.stringify(data)}`
+  };
+
   } catch (err) {
     return { statusCode: 500, body: `Server error: ${err.message}` };
   }
