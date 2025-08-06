@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join Discord</title>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  
+  <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=tsOnload&render=explicit"></script>
+
   <style>
     body {
       font-family: system-ui, sans-serif;
@@ -24,28 +24,31 @@
     .button:disabled { opacity: 0.5; cursor: not-allowed; }
     .message { margin-top: 1rem; font-weight: bold; }
   </style>
-
-  <script>
-    function onTurnstileSuccess(token) {
-      window.__tsToken = token;
-      document.getElementById('join-btn').disabled = false;
-    }
-  </script>
 </head>
 <body>
   <h2>Verify to Join Discord</h2>
   <p>Please complete the verification:</p>
 
-  <div id="turnstile"
-       class="cf-turnstile"
-       data-sitekey="0x4AAAAAABosyyeXiVDmuMiG"
-       data-callback="onTurnstileSuccess">
-  </div>
+  <div id="ts-widget"></div>
 
   <button id="join-btn" class="button" disabled>Join Discord</button>
   <div id="message" class="message"></div>
 
   <script>
+    function tsOnload () {
+      if (!document.querySelector('#ts-widget iframe')) {
+        turnstile.render('#ts-widget', {
+          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
+          callback: onTurnstileSuccess
+        });
+      }
+    }
+
+    function onTurnstileSuccess(token) {
+      window.__tsToken = token;
+      document.getElementById('join-btn').disabled = false;
+    }
+
     document.getElementById('join-btn').addEventListener('click', async () => {
       const res = await fetch('/.netlify/functions/verify-discord', {
         method: 'POST',
