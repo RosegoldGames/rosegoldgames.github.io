@@ -5,12 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join Discord</title>
   <script> 
+    async function onTurnstileSuccess(token) {
+      const msg = document.getElementById('message');
+      msg.textContent = 'Verifying…';
+
+      try {
+        const res = await fetch('/.netlify/functions/verify-discord', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'cf-turnstile-response': token }),
+        redirect: 'manual'
+      });
+
+      if (res.status === 302) {
+        window.location = res.headers.get('Location');
+        return;
+      }
+
+        msg.textContent = await res.text();
+        turnstile.reset('#ts-widget');
+      } catch (err) {
+        msg.textContent = 'Network error: please try again.';
+      }
+    }
+
     function tsOnload() {
       if (!document.querySelector('#ts-widget iframe')) {
         turnstile.render('#ts-widget', {
           sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
           callback: onTurnstileSuccess,
-          theme: 'light'
         });
       }
     }
@@ -35,32 +58,11 @@
   <p>Please complete the verification:</p>
 
   <div id="ts-widget"></div>
+  
   <div id="message" class="message"></div>
 
   <script>
-    async function onTurnstileSuccess(token) {
-      const msg = document.getElementById('message');
-      msg.textContent = 'Verifying…';
-
-      try {
-        const res = await fetch('/.netlify/functions/verify-discord', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'cf-turnstile-response': token }),
-        redirect: 'manual'
-      });
-
-      if (res.status === 302) {
-        window.location = res.headers.get('Location');
-        return;
-      }
-
-      msg.textContent = await res.text();
-      turnstile.reset('#ts-widget');
-    } catch (err) {
-      msg.textContent = 'Network error: please try again.';
-    }
-  }
+    
   </script>
 </body>
 </html>
