@@ -1,12 +1,12 @@
 export async function handler(event) {
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, body: 'Method Not Allowed' };
+    return { statusCode: 405, 'Access-Control-Allow-Origin': '*', body: 'Method Not Allowed' };
   }
 
   try {
     const { 'cf-turnstile-response': token } = JSON.parse(event.body || '{}');
     if (!token) {
-      return { statusCode: 400, body: 'Missing CAPTCHA token' };
+      return { statusCode: 400, 'Access-Control-Allow-Origin': '*', body: 'Missing CAPTCHA token' };
     }
     
     const params = new URLSearchParams();
@@ -35,12 +35,16 @@ export async function handler(event) {
     }
 
     return {
-      'Access-Control-Allow-Origin': '*',
       statusCode: 403,
+      'Access-Control-Allow-Origin': '*',
       body: `CAPTCHA failed: ${JSON.stringify(data)}`
     };
 
   } catch (err) {
-    return { statusCode: 500, body: `Server error: ${err.message}` };
+    return { 
+      statusCode: 500, 
+      'Access-Control-Allow-Origin': '*',
+      body: `Server error: ${err.message}` 
+    };
   }
 }

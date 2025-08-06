@@ -47,11 +47,11 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 'cf-turnstile-response': token }),
-        redirect: 'follow'
+        redirect: 'manual'
       });
 
-      if (res.redirected || res.status === 302) {
-        window.location.href = res.url;
+      if (res.status === 302) {
+        window.location = res.headers.get('Location');
         return;
       }
 
