@@ -27,11 +27,15 @@ export async function handler(event) {
     if (data.success) {
       return {
         statusCode: 302,
-        headers: { Location: process.env.DISCORD_INVITE_URL }
+        headers: { 
+          'Access-Control-Allow-Origin': '*',
+          Location: process.env.DISCORD_INVITE_URL 
+        }
       };
     }
 
     return {
+      'Access-Control-Allow-Origin': '*',
       statusCode: 403,
       body: `CAPTCHA failed: ${JSON.stringify(data)}`
     };

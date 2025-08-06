@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join Discord</title>
+  <script> 
+    function tsOnload() {
+      if (!document.querySelector('#ts-widget iframe')) {
+        turnstile.render('#ts-widget', {
+          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
+          callback: onTurnstileSuccess,
+          theme: 'light'
+        });
+      }
+    }
+  </script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=tsOnload&render=explicit" defer></script>
 
   <style>
@@ -27,16 +38,6 @@
   <div id="message" class="message"></div>
 
   <script>
-    function tsOnload() {
-      if (!document.querySelector('#ts-widget iframe')) {
-        turnstile.render('#ts-widget', {
-          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
-          callback: onTurnstileSuccess,
-          theme: 'light'
-        });
-      }
-    }
-
     async function onTurnstileSuccess(token) {
       const msg = document.getElementById('message');
       msg.textContent = 'Verifying…';
