@@ -43,24 +43,23 @@
 
       try {
         const res = await fetch('/.netlify/functions/verify-discord', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 'cf-turnstile-response': token }),
-          redirect: "follow"
-        });
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'cf-turnstile-response': token }),
+        redirect: 'follow'
+      });
 
-        if (res.redirected || res.status === 302) {
-          window.location.href = res.url;
-        } else {
-          const text = await res.text();
-          msg.textContent = text;
-          turnstile.reset('#ts-widget');
-        }
-      } catch (err) {
-        msg.textContent = 'Network error – please try again.';
-        turnstile.reset('#ts-widget');
+      if (res.redirected || res.status === 302) {
+        window.location.href = res.url;
+        return;
       }
+
+      msg.textContent = await res.text();
+      turnstile.reset('#ts-widget');
+    } catch (err) {
+      msg.textContent = 'Network error: please try again.';
     }
+  }
   </script>
 </body>
 </html>
