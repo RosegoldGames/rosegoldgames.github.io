@@ -12,16 +12,6 @@
       text-align: center;
       padding: 2rem;
     }
-    .button {
-      background: #5865f2;
-      color: #fff;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    .button:disabled { opacity: 0.5; cursor: not-allowed; }
     .message { margin-top: 1rem; font-weight: bold; }
   </style>
 </head>
@@ -30,10 +20,7 @@
   <p>Please complete the verification:</p>
 
   <div id="ts-widget"></div>
-
-  <button id="join-btn" class="button" disabled>Join Discord</button>
-  <div id="message" class="message"></div>
-
+  
   <script>
     function tsOnload () {
       if (!document.querySelector('#ts-widget iframe')) {
@@ -44,24 +31,20 @@
       }
     }
 
-    function onTurnstileSuccess(token) {
-      window.__tsToken = token;
-      document.getElementById('join-btn').disabled = false;
-    }
-
-    document.getElementById('join-btn').addEventListener('click', async () => {
+    async function onTurnstileSuccess(token) {
       const res = await fetch('/.netlify/functions/verify-discord', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'cf-turnstile-response': window.__tsToken })
+        body: JSON.stringify({ 'cf-turnstile-response': token })
       });
 
       if (res.redirected) {
         window.location.href = res.url;
       } else {
         document.getElementById('message').textContent = await res.text();
+        turnstile.reset('#ts-widget');
       }
-    });
+    }
   </script>
 </body>
 </html>
