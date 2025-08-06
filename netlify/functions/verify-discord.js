@@ -24,10 +24,17 @@ export async function handler(event) {
 
     const data = await verifyRes.json();
 
-    return data.success
-      ? { statusCode: 302, headers: { Location: process.env.DISCORD_INVITE_URL } }
-      : { statusCode: 403, body: 'CAPTCHA failed. Try again.' };
+    if (data.success) {
+      return {
+        statusCode: 302,
+        headers: { Location: process.env.DISCORD_INVITE_URL }
+      };
+    }
 
+    return {
+      statusCode: 403,
+      body: `CAPTCHA failed: ${JSON.stringify(data)}`
+    };
   } catch (err) {
     return { statusCode: 500, body: `Server error: ${err.message}` };
   }
