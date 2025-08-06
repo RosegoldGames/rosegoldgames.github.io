@@ -11,19 +11,16 @@
 
       try {
         const res = await fetch('/.netlify/functions/verify-discord', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'cf-turnstile-response': token }),
-        redirect: 'manual'
-      });
+          method: 'POST',
+          redirect: 'manual'
+        });
+        // Temp
+        console.log('Res status & location:', res.status, res.headers.get('Location'));
 
-      if (res.status === 302) {
-        window.location = res.headers.get('Location');
-        return;
-      }
-
-        msg.textContent = await res.text();
-        turnstile.reset('#ts-widget');
+        if (res.status === 302) {
+          window.location = res.headers.get('Location');
+          return;
+        }
       } catch (err) {
         msg.textContent = 'Network error: please try again.';
       }
