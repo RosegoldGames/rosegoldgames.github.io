@@ -1,72 +1,44 @@
-export async function handler(event) {
-  const CORS_HEADERS = {
-    'Access-Control-Allow-Origin': 'https://invite.rosegoldgames.com',
-    'Access-Control-Expose-Headers': 'Location'
-  };
+const fetch = (...args) => import('node-fetch').then(({ default: f }) => f(...args));
 
+exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: CORS_HEADERS,
-      body: 'Method Not Allowed'
-    };
+    return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   const { TURNSTILE_SECRET_KEY, DISCORD_INVITE_URL } = process.env;
   if (!TURNSTILE_SECRET_KEY || !DISCORD_INVITE_URL) {
-    return {
-      statusCode: 500,
-      headers: CORS_HEADERS,
-      body: 'Server error: Missing environment variables'
-    };
+    return { statusCode: 500, body: 'Server mis-configuration' };
   }
 
+  let token;
   try {
-    const { 'cf-turnstile-response': token } = JSON.parse(event.body || '{}');
+    ({ token } = JSON.parse(event.body || '{}'));
+  } catch {
+    return { statusCode: 400, body: 'Bad JSON' };
+  }
+  if (!token) {
+    return { statusCode: 400, body: 'Missing token' };
+  }
 
-    if (!token) {
-      return {
-        statusCode: 400,
-        headers: CORS_HEADERS,
-        body: 'Missing CAPTCHA token'
-      };
-    }
+  const form = new URLSearchParams({ secret: TURNSTILE_SECRET_KEY, response: token });
+  const verifyRes = await fetch(
+    'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+    { method: 'POST', body: form }
+  ).then((r) => r.json());
 
-    const params = new URLSearchParams();
-    params.append('secret', TURNSTILE_SECRET_KEY);
-    params.append('response', token);
-
-    const verifyRes = await fetch(
-      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: params.toString()
-      }
-    );
-
-    const data = await verifyRes.json();
-
-    if (data.success) {
-      return {
-        statusCode: 303,
-        headers: {
-          ...CORS_HEADERS,
-          Location: DISCORD_INVITE_URL
-        }
-      };
-    }
-
+  if (!verifyRes.success) {
     return {
       statusCode: 403,
-      headers: CORS_HEADERS,
-      body: `CAPTCHA failed: ${JSON.stringify(data)}`
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      headers: CORS_HEADERS,
-      body: `Server error: ${err.message}`
+      body: `CAPTCHA failed: ${verifyRes['error-codes']?.join(', ') || 'unknown'}`,
     };
   }
-}
+
+  return {
+    statusCode: 200,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify({ redirectUrl: DISCORD_INVITE_URL }),
+  };
+};

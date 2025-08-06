@@ -1,72 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join Discord</title>
-  <script> 
-  async function onTurnstileSuccess(token) {
-    const msg = document.getElementById('message');
-    msg.textContent = 'Verifying…';
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join Discord</title>
 
-    try {
-      const res = await fetch('/.netlify/functions/verify-discord', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'cf-turnstile-response': token }),
-        redirect: 'manual'
-      });
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script>
+      async function verifyAndRedirect(token) {
+        const message = document.getElementById('message');
+        message.textContent = 'Verifying…';
 
-      if (res.status === 303) {
-        const location = res.headers.get('Location');
-        if (location) {
-          window.location = location;
-        } else {
-          msg.textContent = 'Error: No redirect location received.';
+        try {
+          const res = await fetch('/.netlify/functions/verify-discord', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token }),
+          });
+
+          if (!res.ok) throw new Error(await res.text());
+
+          const { redirectUrl } = await res.json();
+          window.location.href = redirectUrl;
+        } catch (err) {
+          message.textContent = `Error: ${err.message}`;
         }
-        return;
       }
 
-      msg.textContent = await res.text();
-      turnstile.reset('#ts-widget');
-    } catch (err) {
-      msg.textContent = 'Network error: please refresh to try again.';
-    }
-  }
+      function initTurnstile() {
+        turnstile.render('#ts-widget', {
+          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
+          callback: verifyAndRedirect,
+        });
+      }
 
-  function tsOnload() {
-    if (!document.querySelector('#ts-widget iframe')) {
-      turnstile.render('#ts-widget', {
-        sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
-        callback: onTurnstileSuccess,
-      });
-    }
-  }
-  </script>
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=tsOnload&render=explicit" defer></script>
+      window.onload = initTurnstile;
+    </script>
 
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      text-align: center;
-      padding: 2rem;
-    }
-    .message {
-      margin-top: 1rem;
-      font-weight: bold;
-      color: rgb(0, 0, 0);
-    }
-  </style>
-</head>
-<body>
-  <h2>Verify to Join Discord</h2>
-  <p>Please complete the verification:</p>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        text-align: center;
+        padding: 2rem;
+      }
+      .message {
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
 
-  <div id="ts-widget"></div>
-  <div id="message" class="message"></div>
+  <body>
+    <h2>Verify to Join Discord</h2>
+    <p>Checking if you are a human...</p>
 
-  <script>
-    
-  </script>
-</body>
+    <div id="ts-widget"></div>
+    <div id="message" class="message"></div>
+  </body>
 </html>
