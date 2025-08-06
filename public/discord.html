@@ -38,8 +38,10 @@
         body: JSON.stringify({ 'cf-turnstile-response': token })
       });
 
-      if (res.redirected) {
+      if (res.redirected || res.status === 302) {
         window.location.href = res.url;
+        return;
+      }
       } else {
         document.getElementById('message').textContent = await res.text();
         turnstile.reset('#ts-widget');
