@@ -29,7 +29,7 @@ export async function handler(event) {
         statusCode: 302,
         headers: { 
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Expose-Headers': 'Location',
+          'Access-Control-Expose-Headers': Location,
           Location: process.env.DISCORD_INVITE_URL 
         }
       };
