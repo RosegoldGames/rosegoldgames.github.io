@@ -1,12 +1,12 @@
 export async function handler(event) {
   if (event.httpMethod !== 'POST') {
-    return { statusCode: 405, 'Access-Control-Allow-Origin': '*', body: 'Method Not Allowed' };
+    return { statusCode: 405, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'Location', body: 'Method Not Allowed' };
   }
 
   try {
     const { 'cf-turnstile-response': token } = JSON.parse(event.body || '{}');
     if (!token) {
-      return { statusCode: 400, 'Access-Control-Allow-Origin': '*', body: 'Missing CAPTCHA token' };
+      return { statusCode: 400, 'Access-Control-Allow-Origin': '*', 'Access-Control-Expose-Headers': 'Location', body: 'Missing CAPTCHA token' };
     }
     
     const params = new URLSearchParams();
@@ -29,7 +29,7 @@ export async function handler(event) {
         statusCode: 302,
         headers: { 
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Expose-Headers': Location,
+          'Access-Control-Expose-Headers': 'Location',
           Location: process.env.DISCORD_INVITE_URL 
         }
       };
@@ -38,6 +38,7 @@ export async function handler(event) {
     return {
       statusCode: 403,
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Expose-Headers': 'Location',
       body: `CAPTCHA failed: ${JSON.stringify(data)}`
     };
 
@@ -45,6 +46,7 @@ export async function handler(event) {
     return { 
       statusCode: 500, 
       'Access-Control-Allow-Origin': '*',
+      'Access-Control-Expose-Headers': 'Location',
       body: `Server error: ${err.message}` 
     };
   }
