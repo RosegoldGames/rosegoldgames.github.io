@@ -31,10 +31,10 @@ export async function handler(event) {
       };
     }
 
-  return {
-    statusCode: 403,
-    body: `CAPTCHA failed: ${JSON.stringify(data)}`
-  };
+    return {
+      statusCode: 403,
+      body: `CAPTCHA failed: ${JSON.stringify(data)}`
+    };
 
   } catch (err) {
     return { statusCode: 500, body: `Server error: ${err.message}` };

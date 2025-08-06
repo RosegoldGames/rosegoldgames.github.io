@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join Discord</title>
-  <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=tsOnload&render=explicit"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=tsOnload&render=explicit" defer></script>
 
   <style>
     body {
@@ -23,12 +23,15 @@
   
   <script>
     function tsOnload () {
-      if (!document.querySelector('#ts-widget iframe')) {
-        turnstile.render('#ts-widget', {
-          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
-          callback: onTurnstileSuccess
-        });
-      }
+      window.addEventListener('DOMContentLoaded', () => {
+        if (!document.querySelector('#ts-widget iframe')) {
+            turnstile.render('#ts-widget', {
+              sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
+              callback: onTurnstileSuccess
+            }
+          );
+        }
+      });
     }
 
     async function onTurnstileSuccess(token) {
@@ -40,9 +43,8 @@
 
       if (res.redirected || res.status === 302) {
         window.location.href = res.url;
-        return;
-      }
-      } else {
+      } 
+      else {
         document.getElementById('message').textContent = await res.text();
         turnstile.reset('#ts-widget');
       }
