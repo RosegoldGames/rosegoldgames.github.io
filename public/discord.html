@@ -45,7 +45,8 @@
         const res = await fetch('/.netlify/functions/verify-discord', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 'cf-turnstile-response': token })
+          body: JSON.stringify({ 'cf-turnstile-response': token }),
+          redirect: "follow"
         });
 
         if (res.redirected || res.status === 302) {
