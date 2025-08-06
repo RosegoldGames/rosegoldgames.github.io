@@ -5,35 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join Discord</title>
   <script> 
-    async function onTurnstileSuccess(token) {
-      const msg = document.getElementById('message');
-      msg.textContent = 'Verifying…';
+  async function onTurnstileSuccess(token) {
+    const msg = document.getElementById('message');
+    msg.textContent = 'Verifying…';
 
-      try {
-        const res = await fetch('/.netlify/functions/verify-discord', {
-          method: 'POST',
-          redirect: 'manual'
-        });
-        // Temp
-        console.log('Res status & location:', res.status, res.headers.get('Location'));
+    try {
+      const res = await fetch('/.netlify/functions/verify-discord', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 'cf-turnstile-response': token }),
+        redirect: 'manual'
+      });
 
-        if (res.status === 302) {
-          window.location = res.headers.get('Location');
-          return;
+      if (res.status === 302) {
+        const location = res.headers.get('Location');
+        if (location) {
+          window.location = location;
+        } else {
+          msg.textContent = 'Error: No redirect location received.';
         }
-      } catch (err) {
-        msg.textContent = 'Network error: please try again.';
+        return;
       }
-    }
 
-    function tsOnload() {
-      if (!document.querySelector('#ts-widget iframe')) {
-        turnstile.render('#ts-widget', {
-          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
-          callback: onTurnstileSuccess,
-        });
-      }
+      msg.textContent = await res.text();
+      turnstile.reset('#ts-widget');
+    } catch (err) {
+      msg.textContent = 'Network error: please refresh to try again.';
     }
+  }
+
+  function tsOnload() {
+    if (!document.querySelector('#ts-widget iframe')) {
+      turnstile.render('#ts-widget', {
+        sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
+        callback: onTurnstileSuccess,
+      });
+    }
+  }
   </script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=tsOnload&render=explicit" defer></script>
 
