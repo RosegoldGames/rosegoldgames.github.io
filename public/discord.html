@@ -12,7 +12,11 @@
       text-align: center;
       padding: 2rem;
     }
-    .message { margin-top: 1rem; font-weight: bold; }
+    .message {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: rgb(0, 0, 0);
+    }
   </style>
 </head>
 <body>
@@ -20,32 +24,39 @@
   <p>Please complete the verification:</p>
 
   <div id="ts-widget"></div>
-  
+  <div id="message" class="message"></div>
+
   <script>
-    function tsOnload () {
-      window.addEventListener('DOMContentLoaded', () => {
-        if (!document.querySelector('#ts-widget iframe')) {
-            turnstile.render('#ts-widget', {
-              sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
-              callback: onTurnstileSuccess
-            }
-          );
-        }
-      });
+    function tsOnload() {
+      if (!document.querySelector('#ts-widget iframe')) {
+        turnstile.render('#ts-widget', {
+          sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
+          callback: onTurnstileSuccess,
+          theme: 'light'
+        });
+      }
     }
 
     async function onTurnstileSuccess(token) {
-      const res = await fetch('/.netlify/functions/verify-discord', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'cf-turnstile-response': token })
-      });
+      const msg = document.getElementById('message');
+      msg.textContent = 'Verifying…';
 
-      if (res.redirected || res.status === 302) {
-        window.location.href = res.url;
-      } 
-      else {
-        document.getElementById('message').textContent = await res.text();
+      try {
+        const res = await fetch('/.netlify/functions/verify-discord', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 'cf-turnstile-response': token })
+        });
+
+        if (res.redirected || res.status === 302) {
+          window.location.href = res.url;
+        } else {
+          const text = await res.text();
+          msg.textContent = text;
+          turnstile.reset('#ts-widget');
+        }
+      } catch (err) {
+        msg.textContent = 'Network error – please try again.';
         turnstile.reset('#ts-widget');
       }
     }

@@ -10,7 +10,7 @@ export async function handler(event) {
     }
 
     const params = new URLSearchParams();
-    params.append('secret',  process.env.TURNSTILE_SECRET_KEY);
+    params.append('secret', process.env.TURNSTILE_SECRET_KEY);
     params.append('response', token);
 
     const verifyRes = await fetch(
