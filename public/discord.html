@@ -17,7 +17,7 @@
         redirect: 'manual'
       });
 
-      if (res.status === 302) {
+      if (res.status === 303) {
         const location = res.headers.get('Location');
         if (location) {
           window.location = location;

@@ -49,7 +49,7 @@ export async function handler(event) {
 
     if (data.success) {
       return {
-        statusCode: 302,
+        statusCode: 303,
         headers: {
           ...CORS_HEADERS,
           Location: DISCORD_INVITE_URL
