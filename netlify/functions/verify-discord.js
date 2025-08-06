@@ -9,6 +9,10 @@ export async function handler(event) {
       return { statusCode: 400, body: 'Missing CAPTCHA token' };
     }
 
+    console.log("Token: ", token);
+    console.log("Has Secret Key: ", process.env.TURNSTILE_SECRET_KEY ? "Yes" : "No");
+    console.log("Redirect To: ", process.env.DISCORD_INVITE_URL);
+
     const params = new URLSearchParams();
     params.append('secret', process.env.TURNSTILE_SECRET_KEY);
     params.append('response', token);
