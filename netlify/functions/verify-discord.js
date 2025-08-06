@@ -9,15 +9,17 @@ export async function handler(event) {
       return { statusCode: 400, body: 'Missing CAPTCHA token' };
     }
 
-    const params = new URLSearchParams({
-      secret: process.env.TURNSTILE_SECRET_KEY,
-      response: token,
-      remoteip: event.headers['x-forwarded-for'] || event.headers['x-real-ip'] || '',
-    });
+    const params = new URLSearchParams();
+    params.append('secret',  process.env.TURNSTILE_SECRET_KEY);
+    params.append('response', token);
 
     const verifyRes = await fetch(
       'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-      { method: 'POST', body: params }
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString()
+      }
     );
 
     const data = await verifyRes.json();
