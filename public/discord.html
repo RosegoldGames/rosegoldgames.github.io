@@ -2,66 +2,61 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join Discord</title>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  
   <style>
     body {
-      font-family: sans-serif;
+      font-family: system-ui, sans-serif;
       text-align: center;
       padding: 2rem;
     }
     .button {
       background: #5865f2;
-      color: white;
+      color: #fff;
       border: none;
       padding: 0.75rem 1.5rem;
       border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
     }
-    .button:disabled {
-      opacity: 0.5;
-    }
-    .message {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
+    .button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .message { margin-top: 1rem; font-weight: bold; }
   </style>
+
+  <script>
+    function onTurnstileSuccess(token) {
+      window.__tsToken = token;
+      document.getElementById('join-btn').disabled = false;
+    }
+  </script>
 </head>
 <body>
   <h2>Verify to Join Discord</h2>
   <p>Please complete the verification:</p>
 
-  <div id="turnstile" class="cf-turnstile" data-sitekey="0x4AAAAAABosyyeXiVDmuMiG"></div>
+  <div id="turnstile"
+       class="cf-turnstile"
+       data-sitekey="0x4AAAAAABosyyeXiVDmuMiG"
+       data-callback="onTurnstileSuccess">
+  </div>
+
   <button id="join-btn" class="button" disabled>Join Discord</button>
   <div id="message" class="message"></div>
 
   <script>
-    let token = null;
-
-    window.onload = () => {
-      window.turnstile.render('#turnstile', {
-        sitekey: '0x4AAAAAABosyyeXiVDmuMiG',
-        callback: t => {
-          token = t;
-          document.getElementById('join-btn').disabled = false;
-        }
-      });
-    };
-
     document.getElementById('join-btn').addEventListener('click', async () => {
       const res = await fetch('/.netlify/functions/verify-discord', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 'cf-turnstile-response': token })
+        body: JSON.stringify({ 'cf-turnstile-response': window.__tsToken })
       });
 
       if (res.redirected) {
         window.location.href = res.url;
       } else {
-        const msg = await res.text();
-        document.getElementById('message').textContent = msg;
+        document.getElementById('message').textContent = await res.text();
       }
     });
   </script>
