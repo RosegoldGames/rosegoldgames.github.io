@@ -126,8 +126,18 @@ section {
   align-items: center;
 }
 
+.discord-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.discord-row a {
+  display: block;
+}
+
 .discord-row img {
-  max-width: 100%;
+  width: min(100%, 336px);
   height: auto;
 }
 
@@ -198,6 +208,18 @@ footer {
     align-items: center;
     gap: 0.75rem;
     padding: 1rem;
+  }
+
+  .discord-row {
+    width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .discord-row a,
+  .discord-row img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
   }
 
   .connect-button {
