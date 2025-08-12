@@ -8,7 +8,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   line-height: 1.6;
   background-color: #fdf5f5;
-  color: #333;
+  color: #3f1a1a;
   min-height: 100vh;
 }
 
@@ -112,23 +112,18 @@ section {
   border: none;
 }
 
-.discord-btn {
-  display: inline-block;
-  background-color: #5865F2;
-  color: white;
-  padding: 0.75rem 1.25rem;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1rem;
+
+.connect-grid {
+  padding: 1rem;
 }
 
-.discord-btn:hover {
-  background-color: #4752C4;
+.connect-button {
+  padding: 0.75rem 1.25rem;
+  font-size: 0;
 }
 
 footer {
-  background-color: #222;
+  background-color: #3f1a1a;
   color: white;
   text-align: center;
   padding: 1rem;
