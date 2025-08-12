@@ -137,7 +137,8 @@ section {
 }
 
 .discord-row img {
-  width: min(100%, 336px);
+  width: auto;
+  max-width: 336px;
   height: auto;
 }
 
@@ -217,20 +218,12 @@ footer {
 
   .discord-row a,
   .discord-row img {
-    width: 100%;
-    max-width: 480px;
-    height: auto;
+    max-width: 240px;
   }
 
-  .connect-button {
-    display: flex;
-    gap: 0;
-    align-items: center;
-  }
-
-  .connect-button img {
-    width: 96px;
-    height: 96px;
+  .social-row img {
+    width: 86px;
+    height: 86px;
   }
   
 }
