@@ -113,12 +113,32 @@ section {
 }
 
 .connect-grid {
-  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem; /* space between rows */
+  padding: 1.5rem;
 }
 
-.connect-button {
-  padding: 0.75rem 1.25rem;
-  font-size: 0;
+.connect-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.discord-row img {
+  max-width: 100%;
+  height: auto;
+}
+
+.social-row {
+  display: flex;
+  gap: 1rem; /* space between YouTube & Instagram */
+}
+
+.social-row img {
+  width: 128px;
+  height: 128px;
 }
 
 footer {
@@ -170,5 +190,10 @@ footer {
     width: 100%;
     max-width: 400px;
     margin: 1.5rem auto;
+  }
+
+  .social-row img {
+    width: 96px;
+    height: 96px;
   }
 }
