@@ -1,82 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="style.css"/>
-    <link rel="icon" href="assets/icon.svg" type="image/svg+xml"/>
-    <title>Welcome to Rosegold Games: Powered by Coffee, Managed by Ollie, Developed with Love!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml"/>
+  <title>Welcome to Rosegold Games: Powered by Coffee, Managed by Ollie, Developed with Love!</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header>
-  <div class="container">
-    <img src="assets/logo-horizontal-transparent.png" alt="Rosegold Games Logo" class="logo" />
-    <button class="menu-toggle" id="menu-toggle">&#9776;</button>
-    <nav>
-      <ul id="nav-list">
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#services">Projects</a></li>
-        <li><a href="#connect">Connect</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
+  <a class="skip-link" href="#hero">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="container header-inner">
+      <img src="assets/logo-horizontal-transparent.png" alt="Rosegold Games Logo" class="logo" />
+      <nav class="nav" aria-label="Main">
+        <button class="menu-toggle" id="menu-toggle" aria-controls="nav-list" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="menu-icon" aria-hidden="true"></span>
+        </button>
+        <ul id="nav-list" class="nav-list">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Projects</a></li>
+          <li><a href="#connect">Connect</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span class="bar" data-progress></span></div>
   </header>
 
-  <section id="hero">
-    <h2>Powered by Coffee, Managed by Ollie, Developed with Love!</h2>
-    <p>Welcome to my website! I'm still brewing awesome things!</p>
-  </section>
+  <main>
+    <section id="hero" class="section hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h2>Powered by Coffee,</h2>
+          <h2>Managed by Ollie,</h2>
+          <h2>Developed with Love!</h2>
+          <img src="assets/ollie-head.gif" width="142" height="124"/><img src="assets/squiggly-arrow.png"/>
+          <p>Welcome to my website! I'm still brewing awesome things!</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#services">My Projects</a>
+            <a class="btn btn-outline" href="#connect">Connect</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <section id="about">
-    <img src="assets/pixel_me.png" alt="Pixel Me!" class="pixel-me" />
-    <h2>About Me</h2>
-    <p>I'm a solo indie game developer dedicated to designing upbeat, fun, and story-rich games!</p>
-  </section>
+    <section id="about" class="section about">
+      <div class="container grid-2">
+        <div class="about-media">
+          <img src="assets/pixel_me.png" alt="Pixel Me!" class="pixel-me" />
+        </div>
+        <div class="about-copy card elevate">
+          <h2>About Me</h2>
+          <p>I'm a solo indie game developer dedicated to designing upbeat, fun, and story-rich games!</p>
+        </div>
+      </div>
+    </section>
 
-  <section id="services">
-    <h2>My Projects</h2>
-    <div class="card-grid">
-      <div class="card">Under Development</div>
+    <section id="services" class="section projects">
+      <div class="container">
+        <h2 class="section-title">My Projects</h2>
+        <div class="card-grid">
+          <article class="card project-card elevate hover-raise">
+            <div class="card-body">
+              <div class="chip">Under Development</div>
+              <h3 class="project-title sr-only">Under Development</h3>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="connect" class="section connect">
+      <div class="container">
+        <h2 class="section-title">Connect With Me</h2>
+
+        <div class="connect-grid">
+          <div class="connect-row discord-row">
+            <a href="https://dynamic-klepon-3dcea2.netlify.app/discord" class="discord-btn hover-raise" target="_blank" rel="noopener noreferrer">
+              <img src="assets/discord-button.png" alt="Join Us on Discord!" width="336" height="75" loading="lazy">
+            </a>
+          </div>
+
+          <div class="connect-row social-row">
+            <a class="social-link" href="https://www.youtube.com/@rosegoldgamesdev" target="_blank" rel="noopener noreferrer">
+              <img src="assets/youtube-icon.png" alt="YouTube" width="128" height="128" loading="lazy">
+              <span class="sr-only">YouTube</span>
+            </a>
+            <a class="social-link" href="https://www.instagram.com/rosegoldgamesdev/" target="_blank" rel="noopener noreferrer">
+              <img src="assets/instagram-logo.png" alt="Instagram" width="128" height="128" loading="lazy">
+              <span class="sr-only">Instagram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title">Contact Me (Email)</h2>
+        <div class="form-wrapper elevate">
+          <iframe 
+            src="https://prettyform.addxt.com/a/form/vf/1FAIpQLSeENkPW2_zMQHjZkEFRj9oN0F6Ug_KjBoWNEXS1vkaCELxQPg" 
+            width="600" height="540" frameborder="0" marginheight="0" marginwidth="0">
+            Loading…
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2025 Rosegold Games. All rights reserved.</p>
+      <a href="#hero" class="to-top" aria-label="Back to top">↑</a>
     </div>
-  </section>
-
-  <section id="connect">
-  <h2>Connect With Me</h2>
-  <div class="connect-grid">
-    <div class="connect-row discord-row">
-      <a href="https://dynamic-klepon-3dcea2.netlify.app/discord" class="discord-btn" target="_blank" rel="noopener noreferrer">
-        <img src="assets/discord-button.png" alt="Join Us on Discord!" width="336" height="75">
-      </a>
-    </div>
-    
-    <div class="connect-row social-row">
-      <a href="https://www.youtube.com/@rosegoldgamesdev" target="_blank" rel="noopener noreferrer">
-        <img src="assets/youtube-icon.png" alt="YouTube" width="128" height="128">
-      </a>
-      <a href="https://www.instagram.com/rosegoldgamesdev/" target="_blank" rel="noopener noreferrer">
-        <img src="assets/instagram-logo.png" alt="Instagram" width="128" height="128">
-      </a>
-    </div>
-  </div>
-</section>
-
-  <section id="contact">
-  <h2>Contact Me (Email)</h2>
-  <div class="form-wrapper">
-    <iframe 
-      src="https://prettyform.addxt.com/a/form/vf/1FAIpQLSeENkPW2_zMQHjZkEFRj9oN0F6Ug_KjBoWNEXS1vkaCELxQPg" 
-      width="600" height="540" frameborder="0" marginheight="0" marginwidth="0">
-      Loading…
-    </iframe>
-  </div>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Rosegold Games. All rights reserved.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
