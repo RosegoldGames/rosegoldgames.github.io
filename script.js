@@ -105,17 +105,15 @@ onScroll();
       timerId = null;
     }
 
-    prevBtn?.addEventListener("click", () => { prev(); startAuto(); });
-    nextBtn?.addEventListener("click", () => { next(); startAuto(); });
+    prevBtn?.addEventListener("click", () => { prev(); });
+    nextBtn?.addEventListener("click", () => { next(); });
     dotsEl.addEventListener("click", (e) => {
       const btn = e.target.closest("button[data-index]");
       if (!btn) return;
       goTo(parseInt(btn.dataset.index, 10) || 0);
-      startAuto();
     });
 
     // init
     setPosition(false);
-    startAuto();
   });
 })();
