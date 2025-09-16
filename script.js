@@ -34,3 +34,88 @@ function onScroll(){
 }
 window.addEventListener('scroll', onScroll, {passive:true});
 onScroll();
+
+// Project Slideshow
+(function initSlideshows(){
+  const SLIDE_MS = 5000;
+
+  document.querySelectorAll('.slideshow').forEach((root) => {
+    const imagesAttr = root.getAttribute('data-images') || '[]';
+    let images = [];
+    try { images = JSON.parse(imagesAttr); } catch {}
+    if (!Array.isArray(images) || images.length === 0) return;
+
+    const slidesTrack = root.querySelector('.slides');
+    const dotsEl = root.querySelector('.dots');
+    const prevBtn = root.querySelector('.ss-btn.prev');
+    const nextBtn = root.querySelector('.ss-btn.next');
+
+    const extended = [images[images.length - 1], ...images, images[0]];
+    slidesTrack.innerHTML = extended.map(src => (
+      `<div class="slide"><img src="${src}" alt="" loading="lazy"></div>`
+    )).join('');
+
+    dotsEl.innerHTML = images.map((_, i) =>
+      `<button type="button" role="tab" aria-label="Go to slide ${i+1}" data-index="${i}"></button>`
+    ).join('');
+
+    let index = 1;
+    const total = images.length;
+    let timerId = null;
+    const slideWidth = 100;
+
+    function setPosition(animate = true){
+      slidesTrack.style.transition = animate ? "transform .35s ease" : "none";
+      slidesTrack.style.transform = `translateX(-${index * slideWidth}%)`;
+      dotsEl.querySelectorAll("button").forEach((b, bi) => {
+        b.setAttribute("aria-current", bi === index-1 ? "true" : "false");
+      });
+    }
+
+    function next(){
+      index++;
+      setPosition(true);
+    }
+    function prev(){
+      index--;
+      setPosition(true);
+    }
+
+    slidesTrack.addEventListener("transitionend", () => {
+      if (index === 0){
+        index = total;
+        setPosition(false);
+      } else if (index === total + 1){
+        index = 1;
+        setPosition(false);
+      }
+    });
+
+    function goTo(i){
+      index = i + 1;
+      setPosition(true);
+    }
+
+    function startAuto(){
+      stopAuto();
+      timerId = setInterval(next, SLIDE_MS);
+    }
+    function stopAuto(){
+      if (timerId) clearInterval(timerId);
+      timerId = null;
+    }
+
+    prevBtn?.addEventListener("click", () => { prev(); startAuto(); });
+    nextBtn?.addEventListener("click", () => { next(); startAuto(); });
+    dotsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-index]");
+      if (!btn) return;
+      goTo(parseInt(btn.dataset.index, 10) || 0);
+      startAuto();
+    });
+
+    // init
+    setPosition(false);
+    startAuto();
+  });
+})();

@@ -136,6 +136,115 @@ body{
 
 .project-card .chip{display:inline-block;background:var(--rose);color:#fff;border-radius:999px;padding:.4rem .75rem;font-weight:700}
 
+/* ===== Project slideshow ===== */
+.slideshow{
+  position:relative;
+  border-radius:var(--radius);
+  overflow:hidden;
+  background:#000;
+  user-select:none;
+  aspect-ratio:16 / 9;
+}
+
+.slideshow .slides{
+  position:absolute; inset:0;
+  display:flex;
+  transition:transform .35s ease;
+}
+
+.slideshow .slide{
+  flex:0 0 100%;
+  position:relative;
+}
+.slideshow .slide img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover; display:block;
+}
+
+.slideshow .ss-nav{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:space-between;
+  pointer-events:none;
+  padding:.25rem;
+}
+.slideshow .ss-btn{
+  pointer-events:auto;
+  appearance:none; border:0; cursor:pointer;
+  width:40px; height:40px; border-radius:999px;
+  display:grid; place-items:center; font-size:1.5rem; line-height:1;
+  background:rgba(0,0,0,.45); color:#fff;
+  transition:transform .15s ease, background .15s ease;
+}
+.slideshow .ss-btn:hover{ transform:scale(1.06); background:rgba(0,0,0,.6); }
+.slideshow .ss-btn:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+
+.slideshow .dots{
+  position:absolute; left:0; right:0; bottom:.5rem;
+  display:flex; gap:.5rem; justify-content:center; align-items:center;
+}
+.slideshow .dots button{
+  width:8px; height:8px; border-radius:999px; border:0; cursor:pointer;
+  background:rgba(255,255,255,.4);
+}
+.slideshow .dots button[aria-current="true"]{
+  background:#fff; transform:scale(1.15);
+}
+
+.project-desc{
+  text-align:left;
+  margin-top:.75rem;
+  background:var(--white);
+  color:var(--choco);
+  border-radius:calc(var(--radius) - .25rem);
+  padding:.9rem 1rem;
+  box-shadow:var(--shadow);
+}
+.project-desc .otherworld-icon {
+  text-align: center;
+}
+.project-desc .otherworld-icon img {
+  display: inline-block;
+  max-width: 600px;
+}
+.project-desc-title{
+  text-align:center;
+  margin-top:.75rem;
+}
+.project-desc-header{
+  text-align:center;
+  margin-top:.75rem;
+}
+.project-desc h4{
+  color: var(--rose-700);
+  margin:.25rem 0 .35rem;
+  font-size:1.75rem;
+  font-weight: 800;
+}
+.project-desc p{
+  margin:0;
+  font-size:.975rem;
+  line-height:1.5;
+}
+.project-desc h5{
+  margin:.25rem 0 .35rem;
+  font-size:1.05rem;
+  color: var(--rose-700);
+  font-weight: 600;
+}
+
+.project-desc-header a {
+  color: var(--rose-700);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.project-desc-header a:hover,
+.project-desc-header a:focus {
+  color: var(--rose);
+}
+
 /* Connect */
 .connect-grid{display:grid;gap:1.5rem;justify-items:center}
 .connect-row{display:flex;align-items:center;justify-content:center;gap:1rem}
@@ -184,6 +293,10 @@ body{
     max-width: 96px;
     height: auto;
   }
+  .project-desc .otherworld-icon img {
+    display: inline-block;
+    max-width: 300px;
+}
 }
 
 @media (prefers-reduced-motion: reduce){
