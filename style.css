@@ -204,8 +204,10 @@ body{
   text-align: center;
 }
 .project-desc .otherworld-icon img {
-  display: inline-block;
-  max-width: 600px;
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
 }
 .project-desc-title{
   text-align:center;
@@ -294,9 +296,8 @@ body{
     height: auto;
   }
   .project-desc .otherworld-icon img {
-    display: inline-block;
-    max-width: 150px;
-}
+    max-width: 80%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce){
