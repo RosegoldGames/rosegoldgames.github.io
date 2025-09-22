@@ -120,7 +120,7 @@ body{
 
 /* About */
 .about-media{display:flex;align-items:center;justify-content:center}
-section.about .grid-2{width:min(1200px,92%);margin:auto;display:grid;gap:2rem;align-items:center;text-align:center;}
+.section.about .grid-2{width:min(1200px,92%);margin:auto;display:grid;gap:2rem;align-items:center;text-align:center;}
 .pixel-me{width:160px;height:160px;border-radius:1rem;background:var(--rose-soft);padding:.75rem}
 .about-copy.card{border-radius:var(--radius);background:var(--card);padding:1.5rem;text-align:center}
 
