@@ -119,9 +119,9 @@ body{
 .btn-outline:hover{background:rgba(255,255,255,.14)}
 
 /* About */
-.grid-2{width:min(1200px,92%);margin:auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:2rem;align-items:center;text-align:center}
 .about-media{display:flex;align-items:center;justify-content:center}
-.pixel-me{width:160px;height:160px;border-radius:1rem;box-shadow:var(--shadow);background:var(--white);padding:.75rem}
+section.about .grid-2{width:min(1200px,92%);margin:auto;display:grid;gap:2rem;align-items:center;text-align:center;}
+.pixel-me{width:160px;height:160px;border-radius:1rem;background:var(--rose-soft);padding:.75rem}
 .about-copy.card{border-radius:var(--radius);background:var(--card);padding:1.5rem;text-align:center}
 
 /* Projects */
@@ -247,14 +247,12 @@ body{
   color: var(--rose);
 }
 
-/* Connect */
+/* Contact */
 .connect-grid{display:grid;gap:1.5rem;justify-items:center}
 .connect-row{display:flex;align-items:center;justify-content:center;gap:1rem}
 .discord-btn img{display:block;max-width:min(336px,90vw);height:auto;border-radius:.75rem;box-shadow:var(--shadow)}
 .social-row .social-link{display:inline-flex;border-radius:1rem;padding:.25rem;transition:transform .2s ease, box-shadow .2s ease}
 .social-row .social-link:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-
-/* Contact */
 .form-wrapper{width:min(900px,95%);margin:0 auto;border-radius:var(--radius);overflow:hidden;background:var(--white);}
 .form-wrapper iframe{display:block;width:100%;height:min(70vh,600px);border:0}
 
