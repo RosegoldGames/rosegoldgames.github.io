@@ -247,6 +247,230 @@ body{
   color: var(--rose);
 }
 
+.project-desc {
+  text-align:left;
+  margin-top:.75rem;
+  background:var(--white);
+  color:var(--choco);
+  border-radius:calc(var(--radius) - .25rem);
+  padding:1.2rem 1.4rem 1.4rem;
+  box-shadow:var(--shadow);
+}
+
+.project-desc-header{
+  text-align:center;
+  margin-bottom:1rem;
+}
+.project-desc-title{
+  margin:0;
+  font-size:2rem;
+  font-weight: 1000;
+  letter-spacing:.03em;
+}
+.project-desc-tagline{
+  margin:.25rem 0 0;
+  font-size:.95rem;
+  opacity:.85;
+}
+
+.project-desc-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.5rem;
+  justify-content:center;
+  margin-bottom:1.25rem;
+}
+.pill-link{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:.35rem .9rem;
+  border-radius:999px;
+  font-size:.85rem;
+  text-decoration:none;
+  border:1px solid rgba(0,0,0,.06);
+  background:var(--card);
+  color:var(--choco);
+  box-shadow:0 4px 10px rgba(0,0,0,.04);
+  transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.pill-link:hover,
+.pill-link:focus-visible{
+  background:var(--rose-soft);
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+  transform:translateY(-1px);
+}
+
+/* Content layout */
+.project-layout{
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+}
+
+.project-desc-tagline {
+  font-size: 1.25rem;
+  font-weight: 650;
+  text-align: center;
+}
+
+.project-intro-card {
+  background: var(--card);
+  padding: 1rem 1.15rem;
+  border-radius: calc(var(--radius) - .35rem);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+  margin: 1.25rem 0;
+}
+
+.project-intro-card p {
+  margin: .45rem 0;
+  font-size: .95rem;
+  line-height: 1.55;
+}
+
+.project-section{
+  padding:1rem 0;
+  border-top:1px solid rgba(0,0,0,.06);
+}
+.project-section:first-of-type{
+  border-top:none;
+  padding-top:0;
+}
+.project-section-title{
+  text-align: center;
+  margin:.1rem 0 .6rem;
+  font-size:1.6rem;
+  font-weight:1000;
+  color:var(--rose-700);
+}
+.project-section p{
+  margin:.3rem 0;
+  font-size:.95rem;
+}
+
+.region-accordion{
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+  margin-top:.75rem;
+}
+
+.region{
+  border-radius:.9rem;
+  background:var(--card);
+  padding:.55rem .75rem;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.region summary{
+  list-style:none;
+}
+.region summary::-webkit-details-marker{
+  display:none;
+}
+
+.region summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.95rem;
+  color:var(--choco);
+}
+.region summary::after{
+  content:"▾";
+  font-size:.75rem;
+  opacity:.8;
+  transition:transform .2s ease;
+}
+.region[open] summary::after{
+  transform:rotate(180deg);
+}
+
+.region p{
+  margin:.45rem 0 .15rem;
+  font-size:.9rem;
+}
+
+.gameplay-main-loop{
+  margin-bottom:.75rem;
+  text-align:center;
+}
+.project-section-subtitle{
+  margin:.1rem 0 .15rem;
+  font-size:1.2rem;
+  font-weight:800;
+}
+.loop-steps{
+  margin:0;
+  font-size:.9rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.gameplay-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:.6rem;
+  margin-top:.5rem;
+}
+
+.gameplay-card{
+  border-radius:.9rem;
+  background:var(--card);
+  padding:.55rem .75rem;
+  box-shadow:0 4px 12px rgba(0,0,0,.05);
+}
+
+.gameplay-card summary{
+  list-style:none;
+}
+.gameplay-card summary::-webkit-details-marker{
+  display:none;
+}
+
+.gameplay-card summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  font-weight:700;
+  font-size:.9rem;
+}
+.gameplay-card summary::after{
+  content:"▾";
+  font-size:.75rem;
+  opacity:.8;
+  transition:transform .2s ease;
+}
+.gameplay-card[open] summary::after{
+  transform:rotate(180deg);
+}
+
+.gameplay-card p{
+  margin:.35rem 0 .1rem;
+  font-size:.9rem;
+}
+
+.project-desc .mini-card p,
+.project-desc .region p,
+.project-desc .gameplay-card p {
+  font-size: 1.0rem;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+@media (max-width: 768px){
+  .project-desc{
+    padding:1rem .9rem 1.1rem;
+  }
+  .gameplay-grid{
+    grid-template-columns:1fr;
+  }
+}
+
 /* Contact */
 .connect-grid{display:grid;gap:1.5rem;justify-items:center}
 .connect-row{display:flex;align-items:center;justify-content:center;gap:1rem}
